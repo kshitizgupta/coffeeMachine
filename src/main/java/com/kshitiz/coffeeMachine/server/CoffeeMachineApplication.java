@@ -9,7 +9,6 @@ import com.kshitiz.coffeeMachine.service.InMemIngredientInventoryService;
 import com.kshitiz.coffeeMachine.service.IngredientInventoryService;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CoffeeMachineApplication {
     private final CoffeeMachineService coffeeMachineService;
@@ -26,9 +25,7 @@ public class CoffeeMachineApplication {
     public MakeBeverageResponse makeBeverage(final String beverageName) {
         final Beverage beverage = beverageDiscoveryService.find(beverageName);
 
-        MakeBeverageResponse response = coffeeMachineService.makeBeverage(beverage);
-
-        return response;
+        return coffeeMachineService.makeBeverage(beverage);
     }
 
     public void refill(final String ingredientName, final int qty) {
