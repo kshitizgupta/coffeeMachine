@@ -25,7 +25,6 @@ public class CoffeeMachineApplication {
         this.beverageDiscoveryService = new BeverageDiscoveryServiceImpl(beverageConfigurations);
         this.controlPanel = new ControlPanelImpl();
         this.coffeeMachineService = new CoffeeMachineServiceImpl(ingredientInventoryService, controlPanel, noOfOutlets);
-
     }
 
     public void makeBeverage(final String beverageName) {

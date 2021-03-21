@@ -55,10 +55,9 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
             return;
         }
         synchronized (mutex) {
-            if (!ingredientQuantityMap.containsKey(ingredient)) {
-                ingredientQuantityMap.put(ingredient, 0);
+            if (ingredientQuantityMap.containsKey(ingredient)) {
+                ingredientQuantityMap.put(ingredient, ingredientQuantityMap.get(ingredient) + qty);
             }
-            ingredientQuantityMap.put(ingredient, ingredientQuantityMap.get(ingredient) + qty);
         }
     }
 }

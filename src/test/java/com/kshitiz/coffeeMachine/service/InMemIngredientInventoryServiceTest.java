@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import com.kshitiz.coffeeMachine.model.ReserveIngredientResponse;
 import com.kshitiz.coffeeMachine.model.ReserveIngredientStatus;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class InMemIngredientInventoryServiceTest {
-    List<String> ingredients = Arrays.asList("milk", "water");
-    IngredientInventoryService service;
+    private List<String> ingredients = Arrays.asList("milk", "water");
+    private IngredientInventoryService service;
+
     @Before
     public void setUp() throws Exception {
         service = new InMemIngredientInventoryService(ingredients);
