@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface BeverageDiscoveryService {
     Beverage find(final String beverageName);
-    void learnBeverages(final Map<String, Map<String, Integer>> beverages);
+    Map<String, Beverage> learnBeverages(final Map<String, Map<String, Integer>> beverages);
 }
