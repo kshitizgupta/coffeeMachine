@@ -14,6 +14,12 @@ public class ReserveIngredientResponse {
         this.notSufficientIngredients = Collections.unmodifiableList(notSufficientIngredients);
     }
 
+    public ReserveIngredientResponse(final ReserveIngredientStatus status) {
+        this.status = status;
+        notAvailableIngredients = Collections.emptyList();
+        notSufficientIngredients = Collections.emptyList();
+    }
+
     public ReserveIngredientStatus getStatus() {
         return status;
     }
