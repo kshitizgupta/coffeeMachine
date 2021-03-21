@@ -36,4 +36,8 @@ public class CoffeeMachineApplication {
     public void refill(final String ingredientName, final int qty) {
         coffeeMachineService.refill(ingredientName, qty);
     }
+
+    public void alertLowIngredients() {
+        controlPanel.alert("Want to refill these items? " + String.join(",", coffeeMachineService.getLowIngredients()));
+    }
 }
