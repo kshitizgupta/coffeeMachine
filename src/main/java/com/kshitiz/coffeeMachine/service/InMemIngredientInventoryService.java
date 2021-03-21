@@ -11,7 +11,7 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
     private final Map<String, Integer> ingredientQuantityMap;
     private final Object mutex = new Object();
 
-    public InMemIngredientInventoryService(final Map<String, Integer> ingredientQuantityMap, final List<String> ingredients) {
+    public InMemIngredientInventoryService(final List<String> ingredients) {
         this.ingredientQuantityMap = new HashMap<>();
         ingredients.forEach(ingredient -> ingredientQuantityMap.put(ingredient, 0));
     }
