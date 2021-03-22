@@ -3,7 +3,10 @@ package com.kshitiz.coffeeMachine;
 import com.kshitiz.coffeeMachine.server.CoffeeMachineApplication;
 import java.util.Map;
 
-public class CoffeeMachineApplicationTest {
+/**
+ * Customized client with beverages hard coded
+ */
+public class ChaiPointCafeCustomizedClient {
     private static Map<String, Integer> initStock = Map.of(
         "hot_water", 500
         , "hot_milk", 500

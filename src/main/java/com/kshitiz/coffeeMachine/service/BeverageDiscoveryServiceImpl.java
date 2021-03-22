@@ -9,7 +9,7 @@ public class BeverageDiscoveryServiceImpl implements BeverageDiscoveryService {
     private final Map<String, Beverage> beverageDefinitions;
 
     public BeverageDiscoveryServiceImpl(final Map<String, Map<String, Integer>> beverageConfiguration) {
-        this.beverageDefinitions = Collections.unmodifiableMap(learnBeverages(beverageConfiguration));
+        this.beverageDefinitions = learnBeverages(beverageConfiguration);
     }
 
     public Beverage find(final String beverageName) {
@@ -25,6 +25,6 @@ public class BeverageDiscoveryServiceImpl implements BeverageDiscoveryService {
             beverageDefinitionsLocal.put(beverageName, new Beverage(beverageName, composition));
         });
 
-        return beverageDefinitionsLocal;
+        return Collections.unmodifiableMap(beverageDefinitionsLocal);
     }
 }

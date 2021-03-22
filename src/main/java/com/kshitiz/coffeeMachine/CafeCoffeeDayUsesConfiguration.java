@@ -3,7 +3,10 @@ package com.kshitiz.coffeeMachine;
 import com.kshitiz.coffeeMachine.server.CoffeeMachineApplication;
 import com.kshitiz.coffeeMachine.server.CoffeeMachineFactory;
 
-public class CoffeeMachineApplicationTestFromJson {
+/**
+ * Reading json configuration provided by the client
+ */
+public class CafeCoffeeDayUsesConfiguration {
     public static void main(String[] args) {
         CoffeeMachineApplication coffeeMachine  = CoffeeMachineFactory.getFromConfig("src/main/resources/machine-config.json");
 
