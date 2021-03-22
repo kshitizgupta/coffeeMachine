@@ -25,23 +25,25 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
         final List<String> notSufficient = new ArrayList<>();
 
         synchronized (mutex) {
-            for (Map.Entry<String, Integer> e : ingredientList.entrySet()) {
-                if (!ingredientQuantityMap.containsKey(e.getKey())) {
-                    notAvailable.add(e.getKey());
-                } else {
-                    if (ingredientQuantityMap.get(e.getKey()) < e.getValue()) {
-                        notSufficient.add(e.getKey());
-                    }
+            //Find out all not available and not sufficient ingredient list
+            ingredientList.forEach((ingredient, qtyRequired) -> {
+                if (!validIngredients.contains(ingredient)) {
+                    notAvailable.add(ingredient);
+                } else if (ingredientQuantityMap.get(ingredient) < qtyRequired) {
+                    notSufficient.add(ingredient);
                 }
-            }
+            });
 
-            if (notAvailable.isEmpty() && notSufficient.isEmpty()) {
-                for (Map.Entry<String, Integer> e : ingredientList.entrySet()) {
-                    final int stockAvailable = ingredientQuantityMap.get(e.getKey());
-                    final int stockNeeded = e.getValue();
+            boolean possibleToReserve = notAvailable.isEmpty() && notSufficient.isEmpty();
+
+            if (possibleToReserve) {
+                ingredientList.forEach((ingredient, qtyRequired) -> {
+                    //Updating inventory after reserving
+                    final int stockAvailable = ingredientQuantityMap.get(ingredient);
+                    final int stockNeeded = qtyRequired;
                     final int updatedQuantity = stockAvailable - stockNeeded;
-                    ingredientQuantityMap.put(e.getKey(), updatedQuantity);
-                }
+                    ingredientQuantityMap.put(ingredient, updatedQuantity);
+                });
             }
         }
 

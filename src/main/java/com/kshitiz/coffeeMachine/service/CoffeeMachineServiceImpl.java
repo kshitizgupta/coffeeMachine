@@ -70,10 +70,14 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
             messages.add(BEVERAGE_PREPARED);
         } else {
             messages.add(BEVERAGE_NOT_PREPARED);
+
+            //Record all the ingredients which are not available at all
             if (!response.getNotAvailableIngredients().isEmpty()) {
                 messages.add(String.join(", ", response.getNotAvailableIngredients()));
                 messages.add(NOT_AVAILABLE_STR);
             }
+
+            //Record all the ingredients which are less in quantity
             if (!response.getNotSufficientIngredients().isEmpty()) {
                 messages.add(String.join(", ", response.getNotSufficientIngredients()));
                 updateLow(response.getNotSufficientIngredients());
