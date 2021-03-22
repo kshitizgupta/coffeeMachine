@@ -51,6 +51,7 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
     @Override
     public void refill(final String ingredient, final int qty) {
         ingredientInventoryService.refillIngredient(ingredient, qty);
+        removeLow(ingredient);
     }
 
     @Override
@@ -80,15 +81,17 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
             //Record all the ingredients which are less in quantity
             if (!response.getNotSufficientIngredients().isEmpty()) {
                 messages.add(String.join(", ", response.getNotSufficientIngredients()));
-                updateLow(response.getNotSufficientIngredients());
+                addLow(response.getNotSufficientIngredients());
                 messages.add(NOT_SUFFICIENT_STR);
             }
         }
         messages.forEach(str -> message.append(str).append(" "));
     }
 
-    synchronized private void updateLow(final List<String> notSufficientIngredients) {
+    synchronized private void addLow(final List<String> notSufficientIngredients) {
         lowQtyIngredients.addAll(notSufficientIngredients);
     }
-
+    synchronized private void removeLow(final String ingredient) {
+        lowQtyIngredients.remove(ingredient);
+    }
 }
