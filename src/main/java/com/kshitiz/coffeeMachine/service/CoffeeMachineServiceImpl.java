@@ -41,11 +41,20 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
         executorService.submit(() -> {
             final ReserveIngredientResponse response = ingredientInventoryService.reserve(beverage.getComposition());
 
-            final StringBuilder alertMessage = new StringBuilder();
+            /*
+             update lowStockIngredients if any found in response. The approach Ive taken here is to record an ingredient
+             running low only when there was a failure to reserve some stock. And further this ingredient will be removed
+             from this list when a refill of this ingredient happens. For simplicity, I assumed that any refill will cause
+             the ingredient to come out of low running indicator
+             */
+            if (response.getNotSufficientIngredients() != null && response.getNotSufficientIngredients().size() > 0) {
+                addLow(response.getNotSufficientIngredients());
+            }
 
-            evaluateResult(beverage, response, alertMessage);
+            //Build an appropriate message to alert on control panel as per the response
+            final String alertMessage = buildAlertMessage(beverage, response);
 
-            controlPanel.alert(alertMessage.toString());
+            controlPanel.alert(alertMessage);
 
         });
     }
@@ -66,9 +75,13 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
         executorService.shutdown();
     }
 
-    private void evaluateResult(final Beverage beverage, final ReserveIngredientResponse response, final StringBuilder message) {
+    private String buildAlertMessage(final Beverage beverage, final ReserveIngredientResponse response) {
         final List<String> messages = new ArrayList<>();
+
+        //Add beverage name to output
         messages.add(beverage.getName());
+
+        //Add further messaging based on response
         if (ReserveIngredientStatus.OK.equals(response.getStatus())) {
             messages.add(BEVERAGE_PREPARED);
         } else {
@@ -83,11 +96,14 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
             //Record all the ingredients which are less in quantity
             if (!response.getNotSufficientIngredients().isEmpty()) {
                 messages.add(String.join(", ", response.getNotSufficientIngredients()));
-                addLow(response.getNotSufficientIngredients());
                 messages.add(NOT_SUFFICIENT_STR);
             }
         }
-        messages.forEach(str -> message.append(str).append(" "));
+
+        final StringBuilder alertMessage = new StringBuilder();
+        messages.forEach(str -> alertMessage.append(str).append(" "));
+
+        return alertMessage.toString();
     }
 
     private void addLow(final List<String> notSufficientIngredients) {

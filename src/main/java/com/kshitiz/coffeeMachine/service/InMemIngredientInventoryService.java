@@ -56,7 +56,7 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
 
     @Override
     public void refillIngredient(final String ingredient, final int qty) {
-        if (ingredient == null || !validIngredients.contains(ingredient)) {
+        if (ingredient == null || !validIngredients.contains(ingredient) || qty <= 0) {
             return;
         }
         synchronized (mutex) {
