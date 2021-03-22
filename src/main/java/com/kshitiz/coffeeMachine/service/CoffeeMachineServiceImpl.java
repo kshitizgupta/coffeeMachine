@@ -12,15 +12,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CoffeeMachineServiceImpl implements CoffeeMachineService {
-    private final IngredientInventoryService ingredientInventoryService;
-    private final ControlPanel controlPanel;
-    private final ExecutorService executorService;
-    private final Set<String> lowQtyIngredients;
     private final static String BEVERAGE_PREPARED = "is prepared";
     private final static String BEVERAGE_NOT_PREPARED = "cannot be prepared because";
     private final static String NOT_AVAILABLE_STR = "is not available";
     private final static String NOT_SUFFICIENT_STR = "is not sufficient";
 
+    private final IngredientInventoryService ingredientInventoryService;
+    private final ControlPanel controlPanel;
+    private final ExecutorService executorService;
+
+    private final Set<String> lowStockIngredients;
+    private final Object lowStockIngredientLock = new Object();
 
     public CoffeeMachineServiceImpl(final IngredientInventoryService ingredientInventoryService, final ControlPanel controlPanel, final int noOfOutlets) {
         this.ingredientInventoryService = ingredientInventoryService;
@@ -31,7 +33,7 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
         }
 
         this.executorService = Executors.newFixedThreadPool(noOfOutlets);
-        lowQtyIngredients = new HashSet<>();
+        lowStockIngredients = new HashSet<>();
     }
 
     @Override
@@ -56,7 +58,7 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
 
     @Override
     public Set<String> getLowIngredients() {
-        return Collections.unmodifiableSet(lowQtyIngredients);
+        return Collections.unmodifiableSet(lowStockIngredients);
     }
 
     @Override
@@ -88,10 +90,17 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
         messages.forEach(str -> message.append(str).append(" "));
     }
 
-    synchronized private void addLow(final List<String> notSufficientIngredients) {
-        lowQtyIngredients.addAll(notSufficientIngredients);
+    private void addLow(final List<String> notSufficientIngredients) {
+        synchronized (lowStockIngredientLock) {
+            lowStockIngredients.addAll(notSufficientIngredients);
+        }
     }
-    synchronized private void removeLow(final String ingredient) {
-        lowQtyIngredients.remove(ingredient);
+
+    private void removeLow(final String ingredient) {
+        if (lowStockIngredients.contains(ingredient)) {
+            synchronized (lowStockIngredientLock) {
+                lowStockIngredients.remove(ingredient);
+            }
+        }
     }
 }
