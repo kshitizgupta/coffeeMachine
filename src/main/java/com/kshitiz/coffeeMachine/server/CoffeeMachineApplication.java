@@ -44,4 +44,8 @@ public class CoffeeMachineApplication {
         controlPanel.alert("Want to refill these items? " + String.join(",", coffeeMachineService.getLowIngredients()));
     }
 
+    public void shutdown() {
+        coffeeMachineService.shutdown();
+    }
+
 }

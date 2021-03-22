@@ -49,26 +49,24 @@ public class CoffeeMachineApplicationTest {
         , "tea_leaves_syrup", 30
     );
 
-    public static CoffeeMachineApplication init() {
-
-        return new CoffeeMachineApplication(
+    public static void main(String[] args) {
+        final CoffeeMachineApplication coffeeMachine = new CoffeeMachineApplication(
             3,
             initStock,
             Map.of(
-            "hot_tea", hotTea
-            , "hot_coffee", hotCoffee
-            , "black_tea", blackTea
-            , "green_tea", greenTea
-            , "elaichee_tea", elaicheeTea
-        ));
-    }
+                "hot_tea", hotTea
+                , "hot_coffee", hotCoffee
+                , "black_tea", blackTea
+                , "green_tea", greenTea
+                , "elaichee_tea", elaicheeTea
+            ));
 
-    public static void main(String[] args) {
-        final CoffeeMachineApplication application = init();
-        application.makeBeverage("hot_tea");
-        application.makeBeverage("hot_coffee");
-        application.makeBeverage("black_tea");
-        application.makeBeverage("green_tea");
-        application.makeBeverage("elaichee_tea");
+        coffeeMachine.makeBeverage("hot_tea");
+        coffeeMachine.makeBeverage("hot_coffee");
+        coffeeMachine.makeBeverage("black_tea");
+        coffeeMachine.makeBeverage("green_tea");
+        coffeeMachine.makeBeverage("elaichee_tea");
+
+        coffeeMachine.shutdown();
     }
 }

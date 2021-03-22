@@ -58,6 +58,11 @@ public class CoffeeMachineServiceImpl implements CoffeeMachineService {
         return Collections.unmodifiableSet(lowQtyIngredients);
     }
 
+    @Override
+    public void shutdown() {
+        executorService.shutdown();
+    }
+
     private void evaluateResult(final Beverage beverage, final ReserveIngredientResponse response, final StringBuilder message) {
         final List<String> messages = new ArrayList<>();
         messages.add(beverage.getName());

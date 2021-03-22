@@ -7,4 +7,5 @@ public interface CoffeeMachineService {
     void makeBeverage(final Beverage beverage);
     void refill(final String ingredient, final int qty);
     Set<String> getLowIngredients();
+    void shutdown();
 }
