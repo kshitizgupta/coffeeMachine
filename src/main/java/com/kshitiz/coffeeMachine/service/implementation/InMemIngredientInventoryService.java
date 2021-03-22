@@ -1,7 +1,8 @@
-package com.kshitiz.coffeeMachine.service;
+package com.kshitiz.coffeeMachine.service.implementation;
 
 import com.kshitiz.coffeeMachine.model.ReserveIngredientResponse;
 import com.kshitiz.coffeeMachine.model.ReserveIngredientStatus;
+import com.kshitiz.coffeeMachine.service.IngredientInventoryService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

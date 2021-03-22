@@ -1,4 +1,6 @@
-package com.kshitiz.coffeeMachine.service;
+package com.kshitiz.coffeeMachine.service.implementation;
+
+import com.kshitiz.coffeeMachine.service.ControlPanel;
 
 /**
  * Represents control panel and offers apis for services to

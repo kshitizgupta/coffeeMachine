@@ -1,7 +1,10 @@
-package com.kshitiz.coffeeMachine.service;
+package com.kshitiz.coffeeMachine.service.implementation;
 
 import com.kshitiz.coffeeMachine.model.Beverage;
 import com.kshitiz.coffeeMachine.model.ReserveIngredientResponse;
+import com.kshitiz.coffeeMachine.service.CoffeeMachineService;
+import com.kshitiz.coffeeMachine.service.ControlPanel;
+import com.kshitiz.coffeeMachine.service.IngredientInventoryService;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;

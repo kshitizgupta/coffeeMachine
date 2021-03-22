@@ -1,6 +1,7 @@
-package com.kshitiz.coffeeMachine.service;
+package com.kshitiz.coffeeMachine.service.implementation;
 
 import com.kshitiz.coffeeMachine.model.Beverage;
+import com.kshitiz.coffeeMachine.service.BeverageDiscoveryService;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

@@ -2,7 +2,7 @@ package com.kshitiz.coffeeMachine.service;
 
 import static org.junit.Assert.*;
 
-import com.kshitiz.coffeeMachine.model.Beverage;
+import com.kshitiz.coffeeMachine.service.implementation.BeverageDiscoveryServiceImpl;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;

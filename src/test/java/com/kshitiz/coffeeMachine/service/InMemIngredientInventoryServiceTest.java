@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import com.kshitiz.coffeeMachine.model.ReserveIngredientResponse;
 import com.kshitiz.coffeeMachine.model.ReserveIngredientStatus;
+import com.kshitiz.coffeeMachine.service.implementation.InMemIngredientInventoryService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

@@ -2,12 +2,12 @@ package com.kshitiz.coffeeMachine.server;
 
 import com.kshitiz.coffeeMachine.model.Beverage;
 import com.kshitiz.coffeeMachine.service.BeverageDiscoveryService;
-import com.kshitiz.coffeeMachine.service.BeverageDiscoveryServiceImpl;
+import com.kshitiz.coffeeMachine.service.implementation.BeverageDiscoveryServiceImpl;
 import com.kshitiz.coffeeMachine.service.CoffeeMachineService;
-import com.kshitiz.coffeeMachine.service.CoffeeMachineServiceImpl;
+import com.kshitiz.coffeeMachine.service.implementation.CoffeeMachineServiceImpl;
 import com.kshitiz.coffeeMachine.service.ControlPanel;
-import com.kshitiz.coffeeMachine.service.ControlPanelImpl;
-import com.kshitiz.coffeeMachine.service.InMemIngredientInventoryService;
+import com.kshitiz.coffeeMachine.service.implementation.ControlPanelImpl;
+import com.kshitiz.coffeeMachine.service.implementation.InMemIngredientInventoryService;
 import com.kshitiz.coffeeMachine.service.IngredientInventoryService;
 import java.util.ArrayList;
 import java.util.Map;
