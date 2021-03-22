@@ -1,4 +1,4 @@
-package com.kshitiz.coffeeMachine;
+package com.kshitiz.coffeeMachine.clientExamples;
 
 import com.kshitiz.coffeeMachine.server.CoffeeMachineApplication;
 import com.kshitiz.coffeeMachine.server.CoffeeMachineFactory;

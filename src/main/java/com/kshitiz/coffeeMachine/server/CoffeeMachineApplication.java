@@ -31,8 +31,8 @@ public class CoffeeMachineApplication {
         final Map<String, Integer> initialStock,
         final Map<String, Map<String, Integer>> beverageConfigurations
     ) {
-        this.beverageDiscoveryService = new BeverageDiscoveryServiceImpl(beverageConfigurations);
         this.controlPanel = new ControlPanelImpl();
+        this.beverageDiscoveryService = new BeverageDiscoveryServiceImpl(beverageConfigurations);
         this.ingredientInventoryService = new InMemIngredientInventoryService(new ArrayList<>(initialStock.keySet()));
         this.coffeeMachineService = new CoffeeMachineServiceImpl(ingredientInventoryService, controlPanel, noOfOutlets);
         initialStock.forEach(this::refill);
