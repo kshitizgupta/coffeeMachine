@@ -6,14 +6,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class InMemIngredientInventoryService implements IngredientInventoryService {
     private final Map<String, Integer> ingredientQuantityMap;
+    private final Set<String> validIngredients;
     private final Object mutex = new Object();
 
     public InMemIngredientInventoryService(final List<String> ingredients) {
         this.ingredientQuantityMap = new HashMap<>();
         ingredients.forEach(ingredient -> ingredientQuantityMap.put(ingredient, 0));
+        validIngredients = Set.copyOf(ingredients);
     }
 
     @Override
@@ -51,13 +54,11 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
 
     @Override
     public void refillIngredient(final String ingredient, final int qty) {
-        if (ingredient == null) {
+        if (ingredient == null || !validIngredients.contains(ingredient)) {
             return;
         }
         synchronized (mutex) {
-            if (ingredientQuantityMap.containsKey(ingredient)) {
-                ingredientQuantityMap.put(ingredient, ingredientQuantityMap.get(ingredient) + qty);
-            }
+            ingredientQuantityMap.put(ingredient, ingredientQuantityMap.get(ingredient) + qty);
         }
     }
 }

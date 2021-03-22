@@ -1,7 +1,6 @@
 package com.kshitiz.coffeeMachine.server;
 
 import com.kshitiz.coffeeMachine.model.Beverage;
-import com.kshitiz.coffeeMachine.model.MakeBeverageResponse;
 import com.kshitiz.coffeeMachine.service.BeverageDiscoveryService;
 import com.kshitiz.coffeeMachine.service.BeverageDiscoveryServiceImpl;
 import com.kshitiz.coffeeMachine.service.CoffeeMachineService;
@@ -20,11 +19,16 @@ public class CoffeeMachineApplication {
     private final ControlPanel controlPanel;
 
 
-    public CoffeeMachineApplication(final int noOfOutlets, final Map<String, Map<String, Integer>> beverageConfigurations) {
-        this.ingredientInventoryService = new InMemIngredientInventoryService(new ArrayList<>(beverageConfigurations.keySet()));
+    public CoffeeMachineApplication(
+        final int noOfOutlets,
+        final Map<String, Integer> initialStock,
+        final Map<String, Map<String, Integer>> beverageConfigurations
+    ) {
         this.beverageDiscoveryService = new BeverageDiscoveryServiceImpl(beverageConfigurations);
         this.controlPanel = new ControlPanelImpl();
+        this.ingredientInventoryService = new InMemIngredientInventoryService(new ArrayList<>(initialStock.keySet()));
         this.coffeeMachineService = new CoffeeMachineServiceImpl(ingredientInventoryService, controlPanel, noOfOutlets);
+        initialStock.forEach(this::refill);
     }
 
     public void makeBeverage(final String beverageName) {
@@ -39,4 +43,5 @@ public class CoffeeMachineApplication {
     public void alertLowIngredients() {
         controlPanel.alert("Want to refill these items? " + String.join(",", coffeeMachineService.getLowIngredients()));
     }
+
 }

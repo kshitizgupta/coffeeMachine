@@ -49,9 +49,10 @@ public class CoffeeMachineApplicationTest {
         , "sugar_syrup", 50
         , "tea_leaves_syrup", 30
     );
+
     @Before
     public void setUp() throws Exception {
-        application = new CoffeeMachineApplication(3, Map.of(
+        application = new CoffeeMachineApplication(3, initStock, Map.of(
             "hot_tea", hotTea
             , "hot_coffee", hotCoffee
             , "black_tea", blackTea
@@ -59,7 +60,7 @@ public class CoffeeMachineApplicationTest {
             , "elaichee_tea", elaicheeTea
         ));
 
-        initStock.forEach((ingredient, stock)->{
+        initStock.forEach((ingredient, stock) -> {
             application.refill(ingredient, stock);
         });
     }

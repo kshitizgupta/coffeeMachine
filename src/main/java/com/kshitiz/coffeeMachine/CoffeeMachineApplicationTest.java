@@ -51,17 +51,16 @@ public class CoffeeMachineApplicationTest {
 
     public static CoffeeMachineApplication init() {
 
-        CoffeeMachineApplication application = new com.kshitiz.coffeeMachine.server.CoffeeMachineApplication(3, Map.of(
+        return new CoffeeMachineApplication(
+            3,
+            initStock,
+            Map.of(
             "hot_tea", hotTea
             , "hot_coffee", hotCoffee
             , "black_tea", blackTea
             , "green_tea", greenTea
             , "elaichee_tea", elaicheeTea
         ));
-
-        initStock.forEach(application::refill);
-
-        return application;
     }
 
     public static void main(String[] args) {
