@@ -8,14 +8,10 @@ import org.junit.Test;
 public class CoffeeMachineServiceImplTest {
     private CoffeeMachineServiceImpl service;
 
-
     @Before
     public void setUp() throws Exception {
         service = new CoffeeMachineServiceImpl(null, null, 2);
     }
 
-    @Test
-    public void buildAlertMessage() {
 
-    }
 }
