@@ -8,7 +8,7 @@ import com.kshitiz.coffeeMachine.server.CoffeeMachineFactory;
  */
 public class CafeCoffeeDayUsesConfiguration {
     public static void main(String[] args) {
-        CoffeeMachineApplication coffeeMachine  = CoffeeMachineFactory.getFromConfig("src/main/resources/machine-config.json");
+        CoffeeMachineApplication coffeeMachine = CoffeeMachineFactory.getFromConfig("src/main/resources/machine-config.json");
 
         coffeeMachine.makeBeverage("hot_tea");
         coffeeMachine.makeBeverage("hot_coffee");

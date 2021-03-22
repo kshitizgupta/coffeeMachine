@@ -24,7 +24,8 @@ public class CoffeeMachineFactory {
             final JsonNode machineNode = node.findValue("machine");
 
             noOfOutlets = machineNode.findValue("count_n").asInt();
-            initialStock = mapper.convertValue(machineNode.get("total_items_quantity"), new TypeReference<>() {});
+            initialStock = mapper.convertValue(machineNode.get("total_items_quantity"), new TypeReference<>() {
+            });
             beverageDef = mapper.convertValue(machineNode.get("beverages"), new TypeReference<>() {
             });
         } catch (Exception ex) {
@@ -34,8 +35,7 @@ public class CoffeeMachineFactory {
         return application;
     }
 
-    private static String readFileAsString(final String fileName)throws Exception
-    {
+    private static String readFileAsString(final String fileName) throws Exception {
         String data = "";
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
