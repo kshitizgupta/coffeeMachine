@@ -1,6 +1,8 @@
 package com.kshitiz.coffeeMachine.service;
 
+import com.kshitiz.coffeeMachine.MessagingUtil;
 import com.kshitiz.coffeeMachine.model.Beverage;
+import com.kshitiz.coffeeMachine.model.ReserveIngredientResponse;
 import java.util.Set;
 
 /**
@@ -12,7 +14,14 @@ import java.util.Set;
  */
 public interface CoffeeMachineService {
     void makeBeverage(final Beverage beverage);
+
     void refill(final String ingredient, final int qty);
+
     Set<String> getLowIngredients();
+
     void shutdown();
+
+    default String buildAlertMessage(final Beverage beverage, final ReserveIngredientResponse response) {
+        return MessagingUtil.buildAlertMessage(beverage, response);
+    }
 }
