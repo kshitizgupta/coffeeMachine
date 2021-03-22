@@ -11,7 +11,7 @@ import java.util.Set;
 public class InMemIngredientInventoryService implements IngredientInventoryService {
     private final Map<String, Integer> ingredientQuantityMap;
     private final Set<String> validIngredients;
-    private final Object mutex = new Object();
+    private final Object reserveIngredientLock = new Object();
 
     public InMemIngredientInventoryService(final List<String> ingredients) {
         this.ingredientQuantityMap = new HashMap<>();
@@ -23,8 +23,8 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
     public ReserveIngredientResponse reserve(final Map<String, Integer> ingredientList) {
         final List<String> notAvailable = new ArrayList<>();
         final List<String> notSufficient = new ArrayList<>();
-
-        synchronized (mutex) {
+        boolean reserveSuccess = false;
+        synchronized (reserveIngredientLock) {
             //Find out all not available and not sufficient ingredient list
             ingredientList.forEach((ingredient, qtyRequired) -> {
                 if (!validIngredients.contains(ingredient)) {
@@ -44,10 +44,12 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
                     final int updatedQuantity = stockAvailable - stockNeeded;
                     ingredientQuantityMap.put(ingredient, updatedQuantity);
                 });
+                reserveSuccess = true;
             }
+
         }
 
-        if (notAvailable.isEmpty() && notSufficient.isEmpty()) {
+        if (reserveSuccess) {
             return new ReserveIngredientResponse(ReserveIngredientStatus.OK);
         } else {
             return new ReserveIngredientResponse(ReserveIngredientStatus.OUT_OF_STOCK, notAvailable, notSufficient);
@@ -59,7 +61,7 @@ public class InMemIngredientInventoryService implements IngredientInventoryServi
         if (ingredient == null || !validIngredients.contains(ingredient) || qty <= 0) {
             return;
         }
-        synchronized (mutex) {
+        synchronized (reserveIngredientLock) {
             ingredientQuantityMap.put(ingredient, ingredientQuantityMap.get(ingredient) + qty);
         }
     }
